@@ -17,7 +17,7 @@ public class StudentRepo {
     NamedParameterJdbcTemplate template;
 
     List<Student> findAll() {
-        String query = "select id, name, email from user";
+        String query = "select id, name, email from student";
         return template.query(query,
                 (result, rowNum)
                         -> new Student(result.getLong("id"),
@@ -27,7 +27,7 @@ public class StudentRepo {
 
     public Student getStudentById(long id) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", id);
-        String query = "select * from user where id=:id ";
+        String query = "select * from student where id=:id ";
         return template.queryForObject(query, namedParameters, BeanPropertyRowMapper.newInstance(Student.class));
     }
 
@@ -35,13 +35,13 @@ public class StudentRepo {
         Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("name", student.getName());
         paramMap.put("email", student.getEmail());
-        String query = "INSERT INTO user(name,email) VALUES(:name, :email)";
+        String query = "INSERT INTO student(name,email) VALUES(:name, :email)";
         return template.update(query, paramMap);
     }
 
     void deleteStudentById(long id) {
         SqlParameterSource namedParameters = new MapSqlParameterSource().addValue("id", id);
-        String query = "delete from user where id=:id";
+        String query = "delete from student where id=:id";
         template.update(query, namedParameters);
     }
 
@@ -50,7 +50,7 @@ public class StudentRepo {
         paramMap.put("id", student.getId());
         paramMap.put("name", student.getName());
         paramMap.put("email", student.getEmail());
-        String query = "update user set name=:name, email=:email, where id=:id";
+        String query = "update student set name=:name, email=:email where id=:id";
         template.update(query, paramMap);
     }
 }

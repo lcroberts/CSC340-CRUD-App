@@ -20,12 +20,6 @@ public class StudentController {
         return "student/list-students";
     }
 
-    @GetMapping("/id={id}")
-    public String getStudent(@PathVariable long id, Model model) {
-        model.addAttribute("student", service.getStudent(id));
-        return "student/student-detail";
-    }
-
     @GetMapping("/delete/id={id}")
     public String deleteUser(@PathVariable long id) {
         service.deleteStudent(id);
@@ -35,7 +29,7 @@ public class StudentController {
     @PostMapping("/create")
     public String createStudent(Student student) {
         service.saveStudent(student);
-        return "redirect:/user/all";
+        return "redirect:/student/all";
     }
 
     @PostMapping("/update")
